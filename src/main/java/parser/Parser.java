@@ -1,5 +1,6 @@
 package parser;
 
+import parser.data.Numbers;
 import parser.data.ParsedData;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class Parser {
 
 
         return ParsedData.builder()
-                .numbers(numbers)
+                .numbers(Numbers.of(numbers))
                 .operators(operators)
                 .build();
     }
