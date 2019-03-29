@@ -2,8 +2,8 @@ package parser;
 
 import parser.data.ParsedData;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -19,29 +19,21 @@ public class Parser {
      */
     public ParsedData parsing(String input) {
 
+
         String[] strings = input.trim().split("");
 
 
-        //숫자
-        List<Integer> numbers = new ArrayList<>();
-
         //연산자
-        List<String> operators = new ArrayList<>();
+        List<String> operators = IntStream.range(0, strings.length)
+                .filter(i-> (i+1) % 2 == 0)//짝수 일경우
+                .mapToObj(i-> strings[i])
+                .collect(Collectors.toList());
 
-
-        IntStream.range(0, strings.length)
-                .forEach(i -> {
-
-                    if ((i+1) % 2 == 0) {//짝수 일경우
-
-                        operators.add(strings[i]);
-
-                    } else { //홀수 일경우
-
-                        numbers.add(Integer.valueOf(strings[i]));
-                    }
-
-                });
+        //숫자
+        List<Integer> numbers = IntStream.range(0, strings.length)
+                .filter(i-> (i+1) % 2 != 0)//홀수 일경우
+                .mapToObj(i-> Integer.parseInt(strings[i]))
+                .collect(Collectors.toList());
 
 
         return ParsedData.builder()
