@@ -1,5 +1,8 @@
 package calc;
 
+import operator.Minus;
+import operator.Multiple;
+import operator.Plus;
 import org.junit.Before;
 import org.junit.Test;
 import parser.data.ParsedData;
@@ -19,51 +22,11 @@ public class CalculatorTest {
     }
 
     @Test
-    public void plus() {
-
-        //when
-        int result = calc.plus(1, 2);
-
-        //then
-        assertEquals(3, result);
-    }
-
-    @Test
-    public void minus() {
-
-        //when
-        int result = calc.minus(2, 1);
-
-        //then
-        assertEquals(1, result);
-    }
-
-    @Test
-    public void multiple() {
-
-        //when
-        int result = calc.multiple(2, 1);
-
-        //then
-        assertEquals(2, result);
-    }
-
-    @Test
-    public void divide() {
-
-        //when
-        int result = calc.divide(6, 2);
-
-        //then
-        assertEquals(3, result);
-    }
-
-    @Test
     public void calc() {
         //given
         ParsedData parsedData = ParsedData.builder()
                 .numbers(Arrays.asList(1, 2, 3, 4))
-                .operators(Arrays.asList("+", "-", "*"))
+                .operators(Arrays.asList(new Plus(), new Minus(), new Multiple()))
                 .build();
 
         //when

@@ -1,3 +1,4 @@
+import operator.Plus;
 import org.junit.Test;
 import parser.Parser;
 import parser.data.ParsedData;
@@ -31,8 +32,8 @@ public class ParserTest {
         assertTrue(3 == parsedData.getNumbers().get(2));
 
 
-        assertTrue("+".equals(parsedData.getOperators().get(0)));
-        assertTrue("+".equals(parsedData.getOperators().get(1)));
+        assertTrue(parsedData.getOperators().get(0) instanceof Plus);
+        assertTrue(parsedData.getOperators().get(1) instanceof Plus);
     }
 
 }
