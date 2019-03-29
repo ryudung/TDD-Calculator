@@ -25,14 +25,14 @@ public class Parser {
 
         //연산자
         List<String> operators = IntStream.range(0, strings.length)
-                .filter(i-> (i+1) % 2 == 0)//짝수 일경우
-                .mapToObj(i-> strings[i])
+                .filter(i -> i % 2 != 0)//홀수 일경우
+                .mapToObj(i -> strings[i])
                 .collect(Collectors.toList());
 
         //숫자
         List<Integer> numbers = IntStream.range(0, strings.length)
-                .filter(i-> (i+1) % 2 != 0)//홀수 일경우
-                .mapToObj(i-> Integer.parseInt(strings[i]))
+                .filter(i -> i % 2 == 0)//짝수 일경우
+                .mapToObj(i -> Integer.parseInt(strings[i]))
                 .collect(Collectors.toList());
 
 
