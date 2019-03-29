@@ -42,4 +42,17 @@ public class NumbersTest {
         assertEquals(3, num3);
         assertEquals(4, num4);
     }
+
+    @Test
+    public void next() {
+        //when
+        int num1 = numbers.next(0);
+        int num2 = numbers.next(1);
+        int num3 = numbers.next(2);
+
+        //then
+        assertEquals(2, num1);
+        assertEquals(3, num2);
+        assertEquals(4, num3);
+    }
 }
