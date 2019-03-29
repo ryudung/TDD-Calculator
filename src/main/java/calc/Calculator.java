@@ -3,10 +3,11 @@ package calc;
 import operator.Operator;
 import parser.data.Numbers;
 import parser.data.ParsedData;
+import printer.Printer;
 
 import java.util.List;
 
-public class Calculator {
+public class Calculator extends AbstractCalculator {
 
     /**
      * 계산하는 메서드
@@ -25,10 +26,26 @@ public class Calculator {
 
         for (int i = 0; i < operators.size(); i++) {
 
-            result = Operator.operate(operators.get(i), result, numbers.get(i + 1));
+            result = wrappedOperate(operators, numbers, result, i);
 
         }
 
+
+        return result;
+    }
+
+    private int wrappedOperate(List<String> operators, Numbers numbers, int result, int i) {
+
+        Printer.printOutWithSpace(
+                String.valueOf(result),
+                operators.get(i),
+                String.valueOf(numbers.next(i)));
+
+
+        result = Operator.operate(operators.get(i), result, numbers.next(i));
+
+
+        Printer.printOutWithSpace("=", String.valueOf(result));
 
         return result;
     }

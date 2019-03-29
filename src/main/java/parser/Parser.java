@@ -12,6 +12,8 @@ import java.util.stream.IntStream;
  */
 public class Parser {
 
+    private static final String EMPTY = "";
+
     /**
      * input을 파싱해서 숫자, 연산자를 제공하는 메서드
      *
@@ -21,7 +23,7 @@ public class Parser {
     public ParsedData parsing(String input) {
 
 
-        String[] strings = input.trim().split("");
+        String[] strings = input.trim().split(EMPTY);
 
 
         //연산자
