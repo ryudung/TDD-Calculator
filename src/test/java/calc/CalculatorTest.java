@@ -2,9 +2,11 @@ package calc;
 
 import org.junit.Before;
 import org.junit.Test;
+import parser.data.ParsedData;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.core.Is.is;
+import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
 
 public class CalculatorTest {
 
@@ -54,5 +56,20 @@ public class CalculatorTest {
 
         //then
         assertEquals(3, result);
+    }
+
+    @Test
+    public void calc() {
+        //given
+        ParsedData parsedData = ParsedData.builder()
+                .numbers(Arrays.asList(1, 2, 3, 4))
+                .operators(Arrays.asList("+", "-", "*"))
+                .build();
+
+        //when
+        int result = calc.calc(parsedData);
+
+        //then
+        assertEquals(0, result);
     }
 }
