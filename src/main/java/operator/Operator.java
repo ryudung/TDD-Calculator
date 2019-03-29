@@ -1,29 +1,45 @@
 package operator;
 
 import error.OperatorNotExist;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-/**
- * 연산자 인터페이
- * */
-public interface Operator {
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
-    static Operator of(String operator) {
-        switch (operator) {
-            case ("+"):
-                return new Plus();
-            case ("-"):
-                return new Minus();
-            case ("*"):
-                return new Multiple();
-            case ("/"):
-                return new Divide();
-            default:
-                throw new OperatorNotExist();
-        }
-    }
+@Getter
+@AllArgsConstructor
+public enum Operator {
+    PLUS("+", (i, j) -> i + j),
+    MINUS("-", (i, j) -> i - j),
+    MULTIPLE("*", (i, j) -> i * j),
+    DIVIDE("/", (i, j) -> i / j);
+
+    private String key;
+    private BiFunction<Integer, Integer, Integer> consumer;
 
     /**
-     * 연산자로 계산하는 메서드
-     * */
-    int calc(int i, int j);
+     * 연산자를 key로 가지고, 연산 함수를 value로 가지는 map.
+     * Map<연산자, 연산 function> operatorMap
+     */
+    private static Map<String, BiFunction<Integer, Integer, Integer>> operatorMap
+            = Arrays.stream(Operator.values())
+            .collect(Collectors.toMap(Operator::getKey, Operator::getConsumer));
+
+    /**
+     * 연산자 값으로 연산 function을 찾는 메서드.
+     */
+    public static int operate(String operator, int i, int j) {
+
+        BiFunction<Integer, Integer, Integer> operatorBiFunction
+                = operatorMap.get(operator);
+
+        if (operatorBiFunction == null) {
+            throw new OperatorNotExist(operator);
+        }
+
+        return operatorBiFunction.apply(i, j);
+    }
 }

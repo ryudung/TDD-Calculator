@@ -9,7 +9,7 @@ public class Calculator {
 
     public int calc(ParsedData parsedData) {
 
-        List<Operator> operators = parsedData.getOperators();
+        List<String> operators = parsedData.getOperators();
         List<Integer> numbers = parsedData.getNumbers();
 
         int result = numbers.get(0);
@@ -17,9 +17,10 @@ public class Calculator {
 
         for (int i = 0; i < operators.size(); i++) {
 
-            Operator operator = operators.get(i);
+            String operator = operators.get(i);
 
-            result = operator.calc(result, numbers.get(i + 1));
+            result = Operator.operate(operator, result, numbers.get(i + 1));
+
         }
 
 

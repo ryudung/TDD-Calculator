@@ -1,8 +1,5 @@
 package calc;
 
-import operator.Minus;
-import operator.Multiple;
-import operator.Plus;
 import org.junit.Before;
 import org.junit.Test;
 import parser.data.ParsedData;
@@ -26,7 +23,7 @@ public class CalculatorTest {
         //given
         ParsedData parsedData = ParsedData.builder()
                 .numbers(Arrays.asList(1, 2, 3, 4))
-                .operators(Arrays.asList(new Plus(), new Minus(), new Multiple()))
+                .operators(Arrays.asList("+", "-", "*"))
                 .build();
 
         //when

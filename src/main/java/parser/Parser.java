@@ -1,6 +1,5 @@
 package parser;
 
-import operator.Operator;
 import parser.data.ParsedData;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class Parser {
         List<Integer> numbers = new ArrayList<>();
 
         //연산자
-        List<Operator> operators = new ArrayList<>();
+        List<String> operators = new ArrayList<>();
 
 
         IntStream.range(0, strings.length)
@@ -35,7 +34,7 @@ public class Parser {
 
                     if ((i+1) % 2 == 0) {//짝수 일경우
 
-                        operators.add(Operator.of(strings[i]));
+                        operators.add(strings[i]);
 
                     } else { //홀수 일경우
 
