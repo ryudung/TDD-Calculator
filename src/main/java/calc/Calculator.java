@@ -1,6 +1,7 @@
 package calc;
 
 import operator.Operator;
+import parser.Parser;
 import parser.data.Numbers;
 import parser.data.ParsedData;
 import printer.Printer;
@@ -8,6 +9,14 @@ import printer.Printer;
 import java.util.List;
 
 public class Calculator extends AbstractCalculator {
+
+    private Calculator(Parser parser) {
+        super(parser);
+    }
+
+    public static Calculator of(Parser parser) {
+        return new Calculator(parser);
+    }
 
     /**
      * 계산하는 메서드

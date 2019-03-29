@@ -1,4 +1,5 @@
 import calc.Calculator;
+import parser.Parser;
 
 import java.util.Scanner;
 
@@ -39,7 +40,7 @@ public class Main {
 
 
         //계산
-        Calculator calc = new Calculator();
+        Calculator calc = Calculator.of(new Parser());
 
         calc.execute(input);
 

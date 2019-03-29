@@ -7,10 +7,15 @@ import printer.Printer;
 public abstract class AbstractCalculator implements CalculatorCore {
     private static final String RESULT = "결과값:";
 
+    private Parser parser;
+
+    protected AbstractCalculator(Parser parser) {
+        this.parser = parser;
+    }
+
     public void execute(String input) {
 
         // 1.파싱
-        Parser parser = new Parser();
         ParsedData parserData = parser.parsing(input);
 
 
