@@ -42,4 +42,11 @@ public enum Operator {
 
         return operatorBiFunction.apply(i, j);
     }
+
+    /**
+     * 연산자 값을 가지고 있는지 확인하는 메서드.
+     */
+    public static boolean has(String operator) {
+        return operatorMap.get(operator) != null;
+    }
 }
