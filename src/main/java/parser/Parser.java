@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * input을 파싱하는 클래스
  */
 public class Parser {
-
+    private final String SPLIT_REGEX = "[-+*/]";
 
     /**
      * input을 파싱해서 검증하고 결과값을 제공하는 메서드.
@@ -25,7 +25,7 @@ public class Parser {
      * @return 숫자, 연산자를 가지는 객체
      */
     public Optional<ParsedData> parsing(String input) {
-        SplitedData splitedData = splitNumAndOperator(input, "[-+*/]");
+        SplitedData splitedData = splitNumAndOperator(input, SPLIT_REGEX);
 
         List<Integer> numbers;
 
@@ -79,13 +79,16 @@ public class Parser {
 
         while (m.find()) {
 
+            //숫자 추가
             numbers.add(input.substring(last, m.start()));
 
+            //연산자 추가
             operators.add(m.group());
 
             last = m.end();
         }
 
+        //마지막 숫자 추가
         numbers.add(input.substring(last));
 
 
