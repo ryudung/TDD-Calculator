@@ -1,6 +1,7 @@
 package parser;
 
 import parser.data.Numbers;
+import parser.data.Operators;
 import parser.data.ParsedData;
 
 import java.util.List;
@@ -27,21 +28,30 @@ public class Parser {
 
 
         //연산자
-        List<String> operators = IntStream.range(0, strings.length)
-                .filter(i -> i % 2 != 0)//홀수 일경우
-                .mapToObj(i -> strings[i])
-                .collect(Collectors.toList());
+        List<String> operators = findOperators(strings);
 
         //숫자
-        List<Integer> numbers = IntStream.range(0, strings.length)
-                .filter(i -> i % 2 == 0)//짝수 일경우
-                .mapToObj(i -> Integer.parseInt(strings[i]))
-                .collect(Collectors.toList());
+        List<Integer> numbers = findNumbers(strings);
 
 
         return ParsedData.builder()
                 .numbers(Numbers.of(numbers))
-                .operators(operators)
+                .operators(Operators.of(operators))
                 .build();
     }
+
+    private List<Integer> findNumbers(String[] strings) {
+        return IntStream.range(0, strings.length)
+                    .filter(i -> i % 2 == 0)//짝수 일경우
+                    .mapToObj(i -> Integer.parseInt(strings[i]))
+                    .collect(Collectors.toList());
+    }
+
+    private List<String> findOperators(String[] strings) {
+        return IntStream.range(0, strings.length)
+                    .filter(i -> i % 2 != 0)//홀수 일경우
+                    .mapToObj(i -> strings[i])
+                    .collect(Collectors.toList());
+    }
+
 }
