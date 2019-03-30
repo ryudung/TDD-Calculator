@@ -2,7 +2,9 @@ package calc;
 
 import org.junit.Before;
 import org.junit.Test;
+import parser.Parser;
 import parser.data.Numbers;
+import parser.data.Operators;
 import parser.data.ParsedData;
 
 import java.util.Arrays;
@@ -16,7 +18,7 @@ public class CalculatorTest {
     @Before
     public void before() {
         //given
-        calc = new Calculator();
+        calc = Calculator.of(new Parser());
     }
 
     @Test
@@ -24,7 +26,7 @@ public class CalculatorTest {
         //given
         ParsedData parsedData = ParsedData.builder()
                 .numbers(Numbers.of(Arrays.asList(1, 2, 3, 4)))
-                .operators(Arrays.asList("+", "-", "*"))
+                .operators(Operators.of(Arrays.asList("+", "-", "*")))
                 .build();
 
         //when

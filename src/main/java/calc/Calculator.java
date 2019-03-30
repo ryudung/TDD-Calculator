@@ -3,6 +3,7 @@ package calc;
 import operator.Operator;
 import parser.Parser;
 import parser.data.Numbers;
+import parser.data.Operators;
 import parser.data.ParsedData;
 import printer.Printer;
 
@@ -26,7 +27,7 @@ public class Calculator extends AbstractCalculator {
      */
     public int calc(ParsedData parsedData) {
 
-        List<String> operators = parsedData.getOperators();
+        Operators operators = parsedData.getOperators();
         Numbers numbers = parsedData.getNumbers();
 
 
@@ -43,7 +44,7 @@ public class Calculator extends AbstractCalculator {
         return result;
     }
 
-    private int wrappedOperate(List<String> operators, Numbers numbers, int result, int i) {
+    private int wrappedOperate(Operators operators, Numbers numbers, int result, int i) {
 
         Printer.printOutWithSpace(
                 String.valueOf(result),
