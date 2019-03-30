@@ -3,55 +3,96 @@ package parser;
 import parser.data.Numbers;
 import parser.data.Operators;
 import parser.data.ParsedData;
+import parser.data.SplitedData;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * input을 파싱하는 클래스
  */
 public class Parser {
 
-    private static final String EMPTY = "";
 
     /**
-     * input을 파싱해서 숫자, 연산자를 제공하는 메서드
+     * input을 파싱해서 검증하고 결과값을 제공하는 메서드.
      *
      * @param input 유저가 입력한 string
      * @return 숫자, 연산자를 가지는 객체
      */
-    public ParsedData parsing(String input) {
+    public Optional<ParsedData> parsing(String input) {
+        SplitedData splitedData = splitNumAndOperator(input, "[-+*/]");
 
+        List<Integer> numbers;
 
-        String[] strings = input.trim().split(EMPTY);
+        try {
 
+            //숫자
+            numbers = splitedData.getNumbers()
+                    .stream()
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
 
         //연산자
-        List<String> operators = findOperators(strings);
+        Operators operators = Operators.of(splitedData.getOperators());
 
-        //숫자
-        List<Integer> numbers = findNumbers(strings);
+        if (numbers.size() <= operators.size()) {
+            return Optional.empty();
+        }
 
 
-        return ParsedData.builder()
+        return Optional.of(ParsedData.builder()
                 .numbers(Numbers.of(numbers))
-                .operators(Operators.of(operators))
+                .operators(operators)
+                .build());
+    }
+
+
+    /**
+     * 사용자 입력을 숫자와 연산자로 분리하는 메서드.
+     *
+     * @param input 유저가 입력한 값
+     * @param regex 숫자, 연산자를 나눌 정규식 표현
+     * @return 숫자, 연산자를 담는 객체
+     */
+    public SplitedData splitNumAndOperator(String input, String regex) {
+        //숫자
+        List<String> numbers = new LinkedList<>();
+
+        //연산자
+        List<String> operators = new LinkedList<>();
+
+
+        int last = 0;
+
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher m = pattern.matcher(input);
+
+        while (m.find()) {
+
+            numbers.add(input.substring(last, m.start()));
+
+            operators.add(m.group());
+
+            last = m.end();
+        }
+
+        numbers.add(input.substring(last));
+
+
+        return SplitedData.builder()
+                .numbers(numbers)
+                .operators(operators)
                 .build();
-    }
-
-    private List<Integer> findNumbers(String[] strings) {
-        return IntStream.range(0, strings.length)
-                    .filter(i -> i % 2 == 0)//짝수 일경우
-                    .mapToObj(i -> Integer.parseInt(strings[i]))
-                    .collect(Collectors.toList());
-    }
-
-    private List<String> findOperators(String[] strings) {
-        return IntStream.range(0, strings.length)
-                    .filter(i -> i % 2 != 0)//홀수 일경우
-                    .mapToObj(i -> strings[i])
-                    .collect(Collectors.toList());
     }
 
 }

@@ -9,12 +9,8 @@ public class ParsedData {
     private Operators operators;
 
     @Builder
-    public ParsedData(Numbers numbers, Operators operators) {
-        // 4칙 연산 이외에 다른 연산에 대한 에러 처리
-        // 잘못된 연산에 대한 에러 처리
-
+    private ParsedData(Numbers numbers, Operators operators) {
         this.numbers = numbers;
         this.operators = operators;
     }
-
 }
