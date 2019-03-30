@@ -1,20 +1,18 @@
+import org.junit.Assert;
 import org.junit.Test;
 import parser.Parser;
 import parser.data.ParsedData;
+import parser.data.SplitedData;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static junit.framework.TestCase.assertEquals;
 
 public class ParserTest {
 
     @Test
-    public void parsing() {
+    public void parsing1() {
 
         //given
         Parser parser = new Parser();
@@ -28,60 +26,114 @@ public class ParserTest {
         ParsedData parsedData = optParsedData.get();
 
         //then
-        assertTrue(1 == parsedData.getNumbers().get(0));
-        assertTrue(2 == parsedData.getNumbers().get(1));
-        assertTrue(3 == parsedData.getNumbers().get(2));
+        Assert.assertEquals(1, parsedData.getNumbers().get(0));
+        Assert.assertEquals(2, parsedData.getNumbers().get(1));
+        Assert.assertEquals(3, parsedData.getNumbers().get(2));
 
 
-        assertTrue("+".equals(parsedData.getOperators().get(0)));
-        assertTrue("+".equals(parsedData.getOperators().get(1)));
+        Assert.assertEquals("+", parsedData.getOperators().get(0));
+        Assert.assertEquals("+", parsedData.getOperators().get(1));
     }
 
     @Test
-    public void splitOperator() {
+    public void parsing2() {
+
         //given
         Parser parser = new Parser();
-        String input = "10/4*1-2+3";
+
+        String input = "200/10*3000";
+
 
         //when
-        String[] strings = input.split("[-+*/]");
+        Optional<ParsedData> optParsedData = parser.parsing(input);
+
+        ParsedData parsedData = optParsedData.get();
 
         //then
-        for (String str : strings) {
-            System.out.println(str);
-        }
+        Assert.assertEquals(200, parsedData.getNumbers().get(0));
+        Assert.assertEquals(10, parsedData.getNumbers().get(1));
+        Assert.assertEquals(3000, parsedData.getNumbers().get(2));
+
+
+        Assert.assertEquals("/", parsedData.getOperators().get(0));
+        Assert.assertEquals("*", parsedData.getOperators().get(1));
+    }
+
+    @Test
+    public void parsing_사용하지않는연산자() {
+
+        //given
+        Parser parser = new Parser();
+
+        String input = "200=10*3000";
+
+
+        //when
+        Optional<ParsedData> optParsedData = parser.parsing(input);
+
+        //then
+        Assert.assertFalse(optParsedData.isPresent());
+    }
+
+    @Test
+    public void parsing_잘못된연산자수() {
+
+        //given
+        Parser parser = new Parser();
+
+        String input = "200+10*3000+";
+
+        //when
+        Optional<ParsedData> optParsedData = parser.parsing(input);
+
+        //then
+        Assert.assertFalse(optParsedData.isPresent());
+    }
+
+    @Test
+    public void parsing_잘못된연산자수2() {
+
+        //given
+        Parser parser = new Parser();
+
+        String input = "*200+10*3000+";
+
+        //when
+        Optional<ParsedData> optParsedData = parser.parsing(input);
+
+        //then
+        Assert.assertFalse(optParsedData.isPresent());
+    }
+
+    @Test
+    public void parsing_잘못된문자() {
+
+        //given
+        Parser parser = new Parser();
+
+        String input = "200+10*3000k";
+
+        //when
+        Optional<ParsedData> optParsedData = parser.parsing(input);
+
+        //then
+        Assert.assertFalse(optParsedData.isPresent());
     }
 
     @Test
     public void splitNumAndOperator() {
         //given
-
-        //숫자
-        List<String> numbers = new LinkedList<>();
-
-        //연산자
-        List<String> operators = new LinkedList<>();
+        Parser parser = new Parser();
 
         //input
         String input = "10/4*1-2+3";
+        String regex = "[-+*/]";
 
         //when
-        int last = 0;
+        SplitedData splitedData = parser.splitNumAndOperator(input, regex);
 
-        Pattern pattern = Pattern.compile("[-+*/]");
-
-        Matcher m = pattern.matcher(input);
-
-        while (m.find()) {
-
-            numbers.add(input.substring(last, m.start()));
-
-            operators.add(m.group());
-
-            last = m.end();
-        }
-
-        numbers.add(input.substring(last));
+        List<String> numbers = splitedData.getNumbers();
+        List<String> operators = splitedData.getOperators();
 
         //then
         assertEquals("10", numbers.get(0));

@@ -33,8 +33,4 @@ public class Operators {
         return operators.size();
     }
 
-    public boolean isValid() {
-        return operators.stream()
-                .allMatch(Operator::has);
-    }
 }
