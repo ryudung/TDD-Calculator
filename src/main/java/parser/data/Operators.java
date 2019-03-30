@@ -2,6 +2,7 @@ package parser.data;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import operator.Operator;
 
 import java.util.List;
 
@@ -30,5 +31,10 @@ public class Operators {
      */
     public int size() {
         return operators.size();
+    }
+
+    public boolean isValid() {
+        return operators.stream()
+                .allMatch(Operator::has);
     }
 }

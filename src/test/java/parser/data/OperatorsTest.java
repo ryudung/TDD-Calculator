@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class OperatorsTest {
 
@@ -34,5 +34,26 @@ public class OperatorsTest {
 
         //then
         assertEquals(3, size);
+    }
+
+    @Test
+    public void isValid_true() {
+        //when
+        boolean valid = operators.isValid();
+
+        //then
+        assertTrue(valid);
+    }
+
+    @Test
+    public void isValid_false() {
+
+        Operators nonValidOperators = Operators.of(Arrays.asList("+", "-", "*", "&"));
+
+        //when
+        boolean valid = nonValidOperators.isValid();
+
+        //then
+        assertFalse(valid);
     }
 }
