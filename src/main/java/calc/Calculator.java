@@ -7,8 +7,9 @@ import parser.data.Operators;
 import parser.data.ParsedData;
 import printer.Printer;
 
-import java.util.List;
-
+/**
+ * 계산을 처리하는 클래스
+ * */
 public class Calculator extends AbstractCalculator {
 
     private Calculator(Parser parser) {
@@ -44,15 +45,25 @@ public class Calculator extends AbstractCalculator {
         return result;
     }
 
-    private int wrappedOperate(Operators operators, Numbers numbers, int result, int i) {
+    /**
+     * 계산 과정을 프린트하기위해 감싼 메서드.
+     *
+     * @param operators 연산자 리스트
+     * @param numbers 숫자 리스트
+     * @param prevResult 이전 결과값
+     * @param j 계산에서 사용할 숫자, 연산자에 대한 인덱스
+     *
+     * @return 계산한 결과
+     * */
+    private int wrappedOperate(Operators operators, Numbers numbers, int prevResult, int j) {
 
         Printer.printOutWithSpace(
-                String.valueOf(result),
-                operators.get(i),
-                String.valueOf(numbers.next(i)));
+                String.valueOf(prevResult),
+                operators.get(j),
+                String.valueOf(numbers.next(j)));
 
 
-        result = Operator.operate(operators.get(i), result, numbers.next(i));
+        int result = Operator.operate(operators.get(j), prevResult, numbers.next(j));
 
 
         Printer.printOutWithSpace("=", String.valueOf(result));

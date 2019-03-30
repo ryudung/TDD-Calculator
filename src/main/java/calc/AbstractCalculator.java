@@ -16,6 +16,12 @@ public abstract class AbstractCalculator implements CalculatorCore {
         this.parser = parser;
     }
 
+
+    /**
+     * 유저 입력을 받아 계산을 과정을 처리하고, 계산에 대한 결과를 출력하는 메서드.
+     *
+     * @param input 유저입력 데이터
+     * */
     public void execute(String input) {
 
         // 1.파싱
@@ -34,7 +40,7 @@ public abstract class AbstractCalculator implements CalculatorCore {
         int result = calc(parserData);
 
 
-        // 3.프린터
+        // 3.출력
         Printer.printOutWithSpace(RESULT, String.valueOf(result));
     }
 }
