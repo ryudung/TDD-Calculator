@@ -4,8 +4,11 @@ import parser.Parser;
 import parser.data.ParsedData;
 import printer.Printer;
 
+import java.util.Optional;
+
 public abstract class AbstractCalculator implements CalculatorCore {
     private static final String RESULT = "결과값:";
+    private static final String NaN = "NaN";
 
     private Parser parser;
 
@@ -16,7 +19,15 @@ public abstract class AbstractCalculator implements CalculatorCore {
     public void execute(String input) {
 
         // 1.파싱
-        ParsedData parserData = parser.parsing(input);
+        Optional<ParsedData> optParsedData = parser.parsing(input);
+
+        //에러처리.
+        if (!optParsedData.isPresent()) {
+            Printer.print(NaN);
+            return;
+        }
+
+        ParsedData parserData = optParsedData.get();
 
 
         // 2.계산
