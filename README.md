@@ -1,4 +1,4 @@
-## TDD로 간단한 계산기 만들기
+## TDD 연습: 간단한 계산기
 
 ##### 요구사항 1단계
  - 계산은 한번 할 수 있어야한다.
@@ -13,9 +13,11 @@
  
  - 나눗셈의 값은 정수값으로 표현한다.
  
- - OOP(Object orient Programing)로 최적화
+ - OOP(Object Orient Programming)
+    -  역할, 책임, 협력
  
  - 성능보다 객체지향에 우선한다.
+    
  
  
 ##### 요구사항 2단계
@@ -37,4 +39,3 @@
     - 2 * 2 = 4
     - 결과 값: 4
     
-  - OOP(Object orient Programing)로 최적화
