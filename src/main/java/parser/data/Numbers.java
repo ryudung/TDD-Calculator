@@ -7,7 +7,7 @@ import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Numbers {
-    private List<Integer> numbers;
+    private final List<Integer> numbers;
 
     public static Numbers of(List<Integer> numbers) {
         return new Numbers(numbers);

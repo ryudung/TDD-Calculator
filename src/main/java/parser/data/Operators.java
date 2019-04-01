@@ -8,7 +8,7 @@ import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Operators {
-    private List<String> operators;
+    private final List<String> operators;
 
     public static Operators of(List<String> operators) {
         return new Operators(operators);
