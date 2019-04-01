@@ -27,6 +27,11 @@ public class Parser {
     public Optional<ParsedData> parsing(String input) {
         SplitedData splitedData = splitNumAndOperator(input, SPLIT_REGEX);
 
+        //사이즈 검증.
+        if (!splitedData.isSizeValid()) {
+            return Optional.empty();
+        }
+
         List<Integer> numbers;
 
         try {
@@ -41,17 +46,10 @@ public class Parser {
             return Optional.empty();
         }
 
-        //연산자
-        Operators operators = Operators.of(splitedData.getOperators());
-
-        if (numbers.size() <= operators.size()) {
-            return Optional.empty();
-        }
-
 
         return Optional.of(ParsedData.builder()
                 .numbers(Numbers.of(numbers))
-                .operators(operators)
+                .operators(Operators.of(splitedData.getOperators()))
                 .build());
     }
 

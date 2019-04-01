@@ -15,4 +15,11 @@ public class SplitedData {
         this.numbers = numbers;
         this.operators = operators;
     }
+
+    /**
+     * 숫자(numbers), 연산자(operators)+ 1 의 개수가 같은지 검증하는 메서드.
+     * */
+    public boolean isSizeValid() {
+        return numbers.size() == operators.size() + 1;
+    }
 }
